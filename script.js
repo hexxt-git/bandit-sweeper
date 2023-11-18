@@ -36,12 +36,24 @@ setInterval(()=>{
 let revealed = 0
 
 // set up grid 2D array
-let grid = new Array(res).fill(new Array(res).fill(0))
-grid = grid.map((c)=>{
-    return c.map(()=>{
-        return Math.random() < bandit_density ? BANDIT : EMPTY
-    })
-})
+let grid = []
+for(let i = 0 ; i < res ; i++){
+    grid.push([])
+    for(let j = 0 ; j < res ; j++){
+        grid[i].push(EMPTY)
+    }
+}
+let n_bandits = res * res * bandit_density
+for(let i = 0 ; i < n_bandits ; i++){
+    for(let j = 0 ; j < 1000 ; j++){
+        let x = Math.floor(Math.random()*res)
+        let y = Math.floor(Math.random()*res)
+        if(grid[x][y] == EMPTY){
+            grid[x][y] = BANDIT
+            break
+        }
+    }
+}
 
 function id_index(i, j){
     return `(${i}, ${j})`
