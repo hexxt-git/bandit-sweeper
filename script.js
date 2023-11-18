@@ -76,6 +76,7 @@ function revealCell(i, j) { //ricurson
         for(let di = -1 ; di <= 1 ; di++){
             if(i+di == -1 || i+di == res) continue
             for(let dj = -1 ; dj <= 1 ; dj++){
+                if (i == 0 && j == ~~(res/2)) continue; // no auto winning
                 if(di == 0 && dj == 0) continue // avoid infinite loop
                 revealCell(i + di, j + dj); // explore neighbors
             }
@@ -93,7 +94,7 @@ function check_win(){
         let score = Math.floor(timer*100)/100;
         alert("You won! \nand revealed a total of: " + revealed + " tiles\nIn a record time of: " + Math.floor(timer) + " seconds")
         let name = prompt("Enter your name for the leaderboard")
-        name = name == null || name == '' ? 'null' : name;
+        name = name == null || name == '' ? 'player' : name;
         leaderboard.push({'name':name, 'score':score})
         leaderboard = leaderboard.sort((a, b)=>{return a.score - b.score})
         localStorage.setItem("leaderboard", JSON.stringify(leaderboard))
